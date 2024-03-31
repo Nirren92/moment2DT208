@@ -1,6 +1,5 @@
 import { Todo, InterfaceTodo } from "./todo";
 
-
 // KLass och iterface
 export interface InterfaceTodoList{
     addTodo(task: string, priority: '1'|'2'|'3'): boolean;
@@ -13,24 +12,18 @@ export class TodoList implements InterfaceTodoList {
 
     constructor()
     {
-        
         this.loadFromLocalStorage();
-
     }
 
     //lägger till en todo punkt i array // här ska det sparas till localstorage. 
     addTodo(task: string, priority: '1'|'2'|'3'): boolean
     {
-
-
         this.todoarray.push(new Todo(task, false, priority,this.todoarray.length));
         //uppdaterar det sparade datan. 
         console.log("läggertill i storage");
         this.saveToLocalStorage();
         return false;
     }
-
-
 
     //metod för att markera todos som klara)
     markTodoCompleted(todoIndex: number): void 
