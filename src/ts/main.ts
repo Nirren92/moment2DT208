@@ -61,7 +61,7 @@ function addrow(todo:Todo)
         //skapar cell och skapar knapp. skriver värde till föregående cell samt uppdaterar objekt.  
         let cellbutton:Element = document.createElement("td");
         let completebutton:Element = document.createElement("button");
-        completebutton.textContent = "Mark Complete/Incomplete"
+        completebutton.textContent = "Complete"
         completebutton.addEventListener("click",function(){
             console.log("denna klarmarkeras"+todo.Index);
             todolist.markTodoCompleted(todo.Index);
