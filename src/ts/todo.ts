@@ -3,6 +3,7 @@
     Task:string;
     Completed:Boolean;
     Priority:'1'|'2'|'3';
+     //Index får fungera som nyckel.
     Index:number;
 }
 
@@ -17,11 +18,11 @@ export class Todo implements InterfaceTodo {
     {
         this.Task = Task;
         this.Completed = Completed;
-        this.Priority = this.validateProgression(Priority);
+        this.Priority = this.validateprio(Priority);
         this.Index = Index;
     }
     //Funktion som kontrollerar att värde är ok. 
-    private validateProgression(Priority:'1'|'2'|'3') :'1'|'2'|'3'
+    private validateprio(Priority:'1'|'2'|'3') :'1'|'2'|'3'
     {
         if(['1','2','3'].includes(Priority))
         {
