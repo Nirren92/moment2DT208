@@ -37,9 +37,10 @@ export class TodoList implements InterfaceTodoList {
     //metod för att markera todos som klara)
     markTodoCompleted(todoIndex: number): void 
     {
-        console.log("klarmarkerar nr "+todoIndex);
-        this.todoarray[todoIndex].Completed = true;
+        const arrayIndex = this.todoarray.findIndex(todo => todo.Index === todoIndex);
+        this.todoarray[arrayIndex].Completed = true;
         this.saveToLocalStorage();
+
     }
 
     //metod för att hämta hela listan av todos
@@ -80,7 +81,6 @@ export class TodoList implements InterfaceTodoList {
         const arrayIndex = this.todoarray.findIndex(todo => todo.Index === todoIndex);
         this.todoarray.splice (arrayIndex,1);
         this.saveToLocalStorage();
-        console.log("todoarrayser ut",this.todoarray);
     }
 
 
