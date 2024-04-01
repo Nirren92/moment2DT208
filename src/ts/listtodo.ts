@@ -37,7 +37,7 @@ export class TodoList implements InterfaceTodoList {
     //metod för att markera todos som klara)
     markTodoCompleted(todoIndex: number): void 
     {
-        const arrayIndex = this.todoarray.findIndex(todo => todo.Index === todoIndex);
+        const arrayIndex = this.todoarray.findIndex(todo => todo.Index == todoIndex);
         this.todoarray[arrayIndex].Completed = true;
         this.saveToLocalStorage();
 
