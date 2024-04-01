@@ -18,11 +18,20 @@ export class TodoList implements InterfaceTodoList {
     //lägger till en todo punkt i array // här ska det sparas till localstorage. 
     addTodo(task: string, priority: '1'|'2'|'3'): boolean
     {
-        this.todoarray.push(new Todo(task, false, priority,this.todoarray.length));
-        //uppdaterar det sparade datan. 
-        console.log("läggertill i storage");
-        this.saveToLocalStorage();
-        return false;
+        //Index får fungera som nyckel. söker upp det största talet och lägger till 1 för att undvika att få dubletter. .  
+        try
+        {
+            const index:number = this.todoarray.reduce((max:number,elemet:Todo) => elemet.Index > max ? elemet.Index:max,0);
+            this.todoarray.push(new Todo(task, false, priority,index+1));
+
+            this.saveToLocalStorage();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+        
     }
 
     //metod för att markera todos som klara)
@@ -51,6 +60,28 @@ export class TodoList implements InterfaceTodoList {
     loadFromLocalStorage(): void
     {
         let JsonString:any = localStorage.getItem("todolist");
-        this.todoarray = JSON.parse(JsonString)|| [];
+        let temparray:any= JSON.parse(JsonString)|| [];
+        this.todoarray = temparray.map(element => new Todo(
+                element.Task,
+                element.Completed,
+                element.Priority,
+                element.Index));
     }
+
+    getlatest():Todo
+    {
+        //-1 eftersom det börjar på 0
+        return this.todoarray[this.todoarray.length-1];
+    }
+
+
+    deleteTodo(todoIndex:number)
+    {
+        const arrayIndex = this.todoarray.findIndex(todo => todo.Index === todoIndex);
+        this.todoarray.splice (arrayIndex,1);
+        this.saveToLocalStorage();
+        console.log("todoarrayser ut",this.todoarray);
+    }
+
+
 }

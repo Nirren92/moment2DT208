@@ -10,30 +10,21 @@ inputform.addEventListener("submit",(event)=> {
     event.preventDefault();
     const taskInput:HTMLInputElement = document.getElementById("task") as HTMLInputElement;
     const PriorityInput:HTMLInputElement = document.getElementById("Priority") as HTMLInputElement;
-    console.log("lägger till")
-    todolist.addTodo(taskInput.value,PriorityInput.value as '1'|'2'|'3');
-    init();
+    let tempres:Boolean = todolist.addTodo(taskInput.value,PriorityInput.value as '1'|'2'|'3');
+    //Kontrollerar att det gick bra att skapa objekt. 
+    if(tempres)
+    addrow(todolist.getlatest());
 });
 
 //variabler
 const todolist:TodoList = new TodoList();
-
-
-
-
-
-
-
-
-
-
 
 ////////////////////////////////////////
 function init()
 {
     const tabell = document.getElementById("tabell");
     if(tabell)
-    tabell.innerHTML = '';
+    
     
 
     todolist.getTodos().forEach(element => {
@@ -45,9 +36,11 @@ function init()
 
 function addrow(todo:Todo)
 {
+
     let tabell:any = document.getElementById("tabell")
     if(tabell)
     {
+        console.log("data",todolist);
         //skapar rad   
         let row:Element = document.createElement("tr");
         //skapar cell och sätter värde.
@@ -77,6 +70,18 @@ function addrow(todo:Todo)
         cellbutton.appendChild(completebutton);
         row.appendChild(cellbutton);    
         
+        let celldeletebutton:Element = document.createElement("td");
+        let deletebutton:Element = document.createElement("button");
+        deletebutton.textContent = "Delete"
+        deletebutton.addEventListener("click",function(){
+            console.log("denna klarmarkeras"+todo.Index);
+            todolist.deleteTodo(todo.Index);
+            row.remove();
+        });
+        celldeletebutton.appendChild(deletebutton);
+        row.appendChild(celldeletebutton);
+
+
         //Skriver data till tabell. 
         tabell.appendChild(row);
     }
